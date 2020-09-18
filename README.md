@@ -1,4 +1,3 @@
-![CI](https://github.com/brunoslalmeida/jenkins-jnlp-slave-dind/workflows/CI/badge.svg)
 [![DockerPulls](https://img.shields.io/docker/pulls/aquelatecnologia/docker-jnlp-server.svg)](https://registry.hub.docker.com/u/aquelatecnologia/docker-jnlp-server/)
 [![DockerStars](https://img.shields.io/docker/stars/aquelatecnologia/docker-jnlp-server.svg)](https://registry.hub.docker.com/u/aquelatecnologia/docker-jnlp-server/)
 

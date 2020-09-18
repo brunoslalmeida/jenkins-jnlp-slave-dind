@@ -20,11 +20,15 @@ pipeline {
     }    
     stage('Build & Publish Docker Image') {
       when { 
+        anyOf{
           branch 'develop';  
+          branch 'master';
+        }
       }
       steps {
         script {
-          sh "docker build --network host -t ${imageName}:latest ."
+          def B_TAG = (env.BRANCH_NAME == "develop" ) ? 'stage' : 'prod'
+          sh "docker build --network host -t ${imageName}:latest -t ${imageName}:${B_TAG} ."
           withCredentials([usernamePassword(credentialsId: 'dockerhub-at', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
             sh "docker login -p ${PASSWORD}  -u ${USERNAME} "
           }
