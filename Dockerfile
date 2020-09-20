@@ -84,9 +84,8 @@ RUN mkdir -p /opt/sonnar \
  && curl -H 'Cache-Control: no-cache ' https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_VERSION}-linux.zip  -o sonar-scanner-cli-${SONAR_VERSION}-linux.zip \
  && unzip sonar-scanner-cli-${SONAR_VERSION}-linux.zip \
  && rm sonar-scanner-cli-${SONAR_VERSION}-linux.zip \
- && ls /sonar-scanner-4.4.0.2170-linux \ 
  && mv /sonar-scanner-${SONAR_VERSION}-linux /opt/sonnar \
- && ln -s /usr/local/bin/sonar-scanner /opt/sonnar/sonar-scanner-${SONAR_VERSION}-linux/bin/sonar-scanne \
+ && ln -s /opt/sonnar/sonar-scanner-${SONAR_VERSION}-linux/bin/sonar-scanne /usr/local/bin/sonar-scanner \
  && chmod +x /usr/local/bin/sonar-scanner
 
 USER ${user}
