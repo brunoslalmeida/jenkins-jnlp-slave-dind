@@ -76,18 +76,17 @@ RUN mkdir -p /opt/fossa \
   && cd /tmp \
   && curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/fossas/fossa-cli/master/install.sh | BINDIR=/opt/fossa bash \
   && ln -s /opt/fossa/fossa /usr/local/bin/fossa \
-  && chmod 644 /opt/fossa/fossa  
+  && chmod +x /usr/local/bin/fossa 
 
 ENV SONAR_VERSION 4.4.0.2170
 
-RUN mkdir -p /opt/sonnar \
- && curl -H 'Cache-Control: no-cache ' https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_VERSION}-linux.zip  -o sonar-scanner-cli-${SONAR_VERSION}-linux.zip \
- && unzip sonar-scanner-cli-${SONAR_VERSION}-linux.zip \
- && rm sonar-scanner-cli-${SONAR_VERSION}-linux.zip \
- && ls /sonar-scanner-4.4.0.2170-linux \
- && chmod 644 -R /sonar-scanner-${SONAR_VERSION}-linux/bin \
- && mv /sonar-scanner-${SONAR_VERSION}-linux /opt/sonnar \
- && ln -s /usr/local/bin/sonar-scanner /opt/sonnar/sonar-scanner-${SONAR_VERSION}-linux/bin/sonar-scanne 
+RUN mkdir -p /opt/sonnar 
+RUN curl -H 'Cache-Control: no-cache ' https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_VERSION}-linux.zip  -o sonar-scanner-cli-${SONAR_VERSION}-linux.zip 
+RUN unzip sonar-scanner-cli-${SONAR_VERSION}-linux.zip 
+RUN rm sonar-scanner-cli-${SONAR_VERSION}-linux.zip 
+RUN mv /sonar-scanner-${SONAR_VERSION}-linux /opt/sonnar 
+RUN ln -s /opt/sonnar/sonar-scanner-${SONAR_VERSION}-linux/bin/sonar-scanner /usr/local/bin/sonar-scanner 
+RUN chmod +x /usr/local/bin/sonar-scanner
 
 USER ${user}
 ENV AGENT_WORKDIR=${AGENT_WORKDIR}
