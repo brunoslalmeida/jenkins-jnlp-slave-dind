@@ -116,5 +116,4 @@ VOLUME ${AGENT_WORKDIR}
 WORKDIR /home/${user}
 
 USER root
-
 ENTRYPOINT ["/docker-entrypoint.sh"]
