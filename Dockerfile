@@ -40,6 +40,7 @@ COPY docker-entrypoint.sh /docker-entrypoint.sh
 
 RUN apk add --no-cache \
         git \
+        nss \
         gcc \
         bash \
         make \
@@ -48,6 +49,7 @@ RUN apk add --no-cache \
         curl \
         sudo \
         bash \
+        yarn \
         unzip \
         nodejs \
         py-pip \
@@ -55,12 +57,18 @@ RUN apk add --no-cache \
         openssl \
         git-lfs \
         openssh \
+        chromium \
+        freetype \
         musl-dev \
+        harfbuzz \
         libffi-dev \
         nodejs-npm \
         python3-dev \
         openssl-dev \
-        openssh-client 
+        ttf-freefont \
+        freetype-dev \
+        openssh-client \
+        ca-certificates 
 
 RUN pip install --upgrade docker-compose pip \
   && addgroup -g ${gid} ${group} \
@@ -91,6 +99,13 @@ RUN mkdir -p /opt/sonnar \
 RUN curl -LO -H 'Cache-Control: no-cache' "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl" \
  && mv kubectl /usr/local/bin \
  && chmod +x /usr/local/bin/kubectl
+
+# Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+
+# Puppeteer v1.19.0 works with Chromium 77.
+RUN yarn add puppeteer@1.19.0
 
 USER ${user}
 ENV AGENT_WORKDIR=${AGENT_WORKDIR}
