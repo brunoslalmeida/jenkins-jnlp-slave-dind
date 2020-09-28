@@ -68,7 +68,8 @@ RUN apk add --no-cache \
         ttf-freefont \
         freetype-dev \
         openssh-client \
-        ca-certificates 
+        ca-certificates \
+        chromium-chromedriver
 
 RUN pip install --upgrade docker-compose pip \
   && addgroup -g ${gid} ${group} \
