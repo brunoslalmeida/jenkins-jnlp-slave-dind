@@ -19,7 +19,8 @@ pipeline {
           sh "GH_TOKEN=${TOKEN} node_modules/semantic-release/bin/semantic-release.js"
         }
       }
-    }    
+    }  
+  
     stage('Build & Publish Docker Image') {
       steps {
         script {
