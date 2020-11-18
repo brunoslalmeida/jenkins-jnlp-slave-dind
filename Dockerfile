@@ -95,7 +95,9 @@ RUN mkdir -p /opt/sonnar \
  && rm sonar-scanner-cli-${SONAR_VERSION}-linux.zip \
  && mv /sonar-scanner-${SONAR_VERSION}-linux /opt/sonnar \
  && ln -s /opt/sonnar/sonar-scanner-${SONAR_VERSION}-linux/bin/sonar-scanner /usr/local/bin/sonar-scanner \
- && chmod +x /usr/local/bin/sonar-scanner
+ && chmod +x /usr/local/bin/sonar-scanner \
+ && rm /opt/sonnar/sonar-scanner-${SONAR_VERSION}-linux/jre/bin/java \
+ && ln -s /usr/bin/java /opt/sonnar/sonar-scanner-${SONAR_VERSION}-linux/jre/bin/java
 
 RUN curl -LO -H 'Cache-Control: no-cache' "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl" \
  && mv kubectl /usr/local/bin \
