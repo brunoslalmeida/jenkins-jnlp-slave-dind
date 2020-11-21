@@ -39,11 +39,12 @@ ENV HOME /home/${user}
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 
 RUN apk add --no-cache \
+        go \
         git \
         nss \
         gcc \
-        bash \
         make \
+        bash \
         curl \
         glib \
         curl \
@@ -58,6 +59,7 @@ RUN apk add --no-cache \
         git-lfs \
         openssh \
         chromium \
+        musl-dev \
         freetype \
         musl-dev \
         harfbuzz \
@@ -70,6 +72,13 @@ RUN apk add --no-cache \
         openssh-client \
         ca-certificates \
         chromium-chromedriver
+
+ENV GOROOT /usr/lib/go
+ENV GOPATH /go
+ENV PATH /go/bin:$PATH
+
+RUN mkdir -p ${GOPATH}/src ${GOPATH}/bin \
+  && go get github.com/github-release/github-release
 
 RUN pip install --upgrade docker-compose pip \
   && addgroup -g ${gid} ${group} \
