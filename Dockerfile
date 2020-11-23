@@ -63,6 +63,42 @@ ENV GOROOT /usr/lib/go
 ENV GOPATH /go
 ENV PATH /go/bin:$PATH
 
+#https://hub.docker.com/r/thyrlian/android-sdk/dockerfile
+
+# download and install Gradle
+# https://services.gradle.org/distributions/
+ARG GRADLE_VERSION=6.7
+ARG GRADLE_DIST=bin
+RUN cd /opt && \
+    wget -q https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-${GRADLE_DIST}.zip && \
+    unzip gradle*.zip && \
+    rm gradle*.zip && \
+    mv gradle* gradle
+    
+
+
+# download and install Kotlin compiler
+# https://github.com/JetBrains/kotlin/releases/latest
+ARG KOTLIN_VERSION=1.4.10
+RUN cd /opt && \
+    wget -q https://github.com/JetBrains/kotlin/releases/download/v${KOTLIN_VERSION}/kotlin-compiler-${KOTLIN_VERSION}.zip && \
+    unzip *kotlin*.zip && \
+    rm *kotlin*.zip
+
+# download and install Android SDK
+# https://developer.android.com/studio#command-tools
+ARG ANDROID_SDK_VERSION=6858069
+ENV ANDROID_SDK_ROOT /opt/android-sdk
+RUN mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools && \
+    wget -q https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_SDK_VERSION}_latest.zip && \
+    unzip *tools*linux*.zip -d ${ANDROID_SDK_ROOT}/cmdline-tools && \
+    mv ${ANDROID_SDK_ROOT}/cmdline-tools/cmdline-tools ${ANDROID_SDK_ROOT}/cmdline-tools/tools && \
+    rm *tools*linux*.zip
+
+ENV GRADLE_HOME /opt/gradle
+ENV KOTLIN_HOME /opt/kotlinc
+ENV PATH ${PATH}:${GRADLE_HOME}/bin:${KOTLIN_HOME}/bin:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/cmdline-tools/tools/bin:${ANDROID_SDK_ROOT}/platform-tools:${ANDROID_SDK_ROOT}/emulator
+
 RUN mkdir -p ${GOPATH}/src ${GOPATH}/bin \
   && go get github.com/github-release/github-release
 
