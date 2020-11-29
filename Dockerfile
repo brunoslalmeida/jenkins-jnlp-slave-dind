@@ -63,18 +63,6 @@ ENV GOROOT /usr/lib/go
 ENV GOPATH /go
 ENV PATH /go/bin:$PATH
 
-#https://hub.docker.com/r/thyrlian/android-sdk/dockerfile
-
-# download and install Gradle
-# https://services.gradle.org/distributions/
-ARG GRADLE_VERSION=6.8-rc-1
-ARG GRADLE_DIST=bin
-RUN cd /opt && \
-    wget -q https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-${GRADLE_DIST}.zip && \
-    unzip gradle*.zip && \
-    rm gradle*.zip && \
-    mv gradle* gradle
-
 # download and install Kotlin compiler
 # https://github.com/JetBrains/kotlin/releases/latest
 ARG KOTLIN_VERSION=1.4.10
