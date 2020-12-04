@@ -27,6 +27,7 @@ RUN apk add --no-cache \
         go \
         git \
         nss \
+        img \
         gcc \
         make \
         bash \
