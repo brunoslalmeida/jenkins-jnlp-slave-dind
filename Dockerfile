@@ -27,6 +27,7 @@ RUN apk add --no-cache \
         go \
         git \
         nss \
+        img \
         gcc \
         make \
         bash \
@@ -41,6 +42,8 @@ RUN apk add --no-cache \
         py-pip \
         procps \
         openssl \
+        python2 \
+        python3 \
         git-lfs \
         openssh \
         chromium \
